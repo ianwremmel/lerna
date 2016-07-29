@@ -57,8 +57,8 @@ export default class BootstrapCommand extends Command {
       async.parallelLimit(batch.map(pkg => done => {
         async.series([
           cb => FileSystemUtilities.mkdirp(pkg.nodeModulesLocation, cb),
-          cb => this.installExternalPackages(pkg, cb),
           cb => this.linkDependenciesForPackage(pkg, cb),
+          cb => this.installExternalPackages(pkg, cb),
           cb => this.runPrepublishForPackage(pkg, cb),
         ], err => {
           this.progressBar.tick(pkg.name);
